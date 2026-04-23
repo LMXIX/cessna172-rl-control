@@ -15,7 +15,7 @@ This repository contains the MATLAB source code, trained agent, and evaluation r
 | Moderate turbulence (Sev 1–3) | Comparable | Comparable |
 | Severe turbulence (Sev 5) | Higher RMS | Lower RMS, smoother |
 | Step climb (CG-varied MC) | Precise overshoot, fast settle | Sluggish, steady-state error |
-| Wind shear (adversarial MC) | Maintained stall margin | Dropped below stall in some runs |
+| Wind shear (adverse MC) | Maintained stall margin | Dropped below stall in some runs |
 | Elevator icing (40% authority) | **Divergent — permanent altitude loss** | **Stable — maintained target** |
 
 ## Prerequisites
