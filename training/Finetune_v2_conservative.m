@@ -1,14 +1,3 @@
-% =======================================================
-% CONSERVATIVE FINE-TUNE: Agent2851 → Better altitude tracking
-% while PRESERVING elevator smoothness.
-%
-% Changes from previous fine-tune:
-%   - Altitude penalty: min(abs(err_h)/600, 0.1) — HALF strength
-%   - Smoothness penalty: (delta^2)*10, capped at 3.0 — DOUBLED
-%   - Stick movement: abs(delta)*1.0 — DOUBLED
-%   - Ultra-tight clip (0.05) and very low entropy (0.0005)
-%   - Lower learning rate (1e-5)
-% =======================================================
 clear all; clc; rng('shuffle');
 
 %% Load Agent2851
