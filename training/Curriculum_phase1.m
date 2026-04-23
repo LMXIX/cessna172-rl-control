@@ -1,6 +1,3 @@
-% =======================================================
-% CURRICULUM TRAINING - PHASE 1: ELEVATOR (PITCH) ONLY
-% =======================================================
 clear all; clc;
 
 % 1. Initialize the Curriculum Environment
@@ -16,7 +13,7 @@ actInfo = getActionInfo(env);
 agentOpts = rlPPOAgentOptions(...
     'ExperienceHorizon', 3000, ...      % Learn from a full 60-second episode at once
     'ClipFactor', 0.1, ...              % REDUCED: Force smoother, more restrictive policy updates to prevent collapse
-    'EntropyLossWeight', 0.005, ...     % REDUCED: Allow agent to settle into a deterministic smooth policy
+    'EntropyLossWeight', 0.005, ...     % REDUCED: Allow agent to settle into a smooth policy
     'MiniBatchSize', 512, ...           % INCREASED: Look at twice as much data before taking a step
     'NumEpoch', 3, ...
     'DiscountFactor', 0.995);           
@@ -28,7 +25,6 @@ agent = rlPPOAgent(obsInfo, actInfo, agentOpts);
 agent.AgentOptions.CriticOptimizerOptions.GradientThreshold = 1;
 agent.AgentOptions.ActorOptimizerOptions.GradientThreshold = 1;
 
-% REDUCED: Slower stable PPO learning rates to prevent overtraining collapse
 agent.AgentOptions.CriticOptimizerOptions.LearnRate = 5e-5;
 agent.AgentOptions.ActorOptimizerOptions.LearnRate = 5e-5; % Match critic so it memorizes the perfect strategy
 
@@ -52,9 +48,9 @@ if ~exist('curriculum_models/Phase1', 'dir')
 end
 
 % 4. START THE SIMULATION
-disp('🛫 Starting Phase 1 Curriculum: Pitch Control (Deterministic Spawns)...');
+disp('Starting Phase 1 Curriculum: Pitch Control');
 trainingStats = train(agent, env, trainOpts);
 
 % Save the final converged champion explicitly
 save('curriculum_models/Phase1/Champion_Phase1.mat', 'agent');
-disp('✅ Phase 1 Complete! The agent has mastered Pitch. Champion saved.');
+
