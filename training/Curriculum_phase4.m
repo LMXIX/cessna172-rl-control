@@ -1,5 +1,5 @@
-%% Curriculum Phase 4: Full Robustness (No PID)
-% This script loads the Phase 3 Agent and strips away ALL training wheels.
+%% Curriculum Phase 4: Full Robustness 
+% This script loads the Phase 3 Agent 
 % The agent now has 100% manual control over the Aileron and Throttle.
 
 clear all; clc; rng('shuffle');
@@ -12,16 +12,14 @@ agent = loaded_data.(fields{1});
 disp('Creating Simulation Environment (Phase 4)...');
 env = CessnaMasterEnvv2();
 
-% CRITICAL: Phase 4 Activates 100% Agent Authority (Aileron & Throttle)
+
 env.CurriculumPhase = 4;
 
 % Obtain action and observation information
 obsInfo = getObservationInfo(env);
 actInfo = getActionInfo(env);
 
-% -------------------------------------------------------------
-% REFINING PPO HYPERPARAMETERS FOR THROTTLE EXPLORATION
-% -------------------------------------------------------------
+
 % The agent's Aileron and Elevator weights are perfect, but its Throttle 
 % weights are complete random nonsense. We need to encourage enough exploration 
 % for it to find the throttle, without overwriting the steering knowledge.
@@ -31,9 +29,7 @@ agent.AgentOptions.ClipFactor = 0.05;
 agent.AgentOptions.CriticOptimizerOptions.LearnRate = 5e-5;
 agent.AgentOptions.ActorOptimizerOptions.LearnRate = 5e-5; 
 
-% -------------------------------------------------------------
-% TRAINING PARAMETERS
-% -------------------------------------------------------------
+
 trainOpts = rlTrainingOptions(...
     'MaxEpisodes', 15000, ...            
     'MaxStepsPerEpisode', 3000, ...     
@@ -51,9 +47,7 @@ if ~exist('curriculum_models/Phase4', 'dir')
     mkdir('curriculum_models/Phase4');
 end
 
-% -------------------------------------------------------------
-% START TRAINING
-% -------------------------------------------------------------
+
 disp('Starting Curriculum Phase 4 Training (100% Authority)...');
 trainingStats = train(agent, env, trainOpts);
 
